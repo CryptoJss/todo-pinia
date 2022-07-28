@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { AddTodo, DeleteTodo, DeleteCompletedTodo } from '../firebase/crud.js'
 
 export const useTodoStore = defineStore({
     id: 'todoStore',
@@ -27,10 +28,12 @@ export const useTodoStore = defineStore({
         }
     },
     actions: {
-        agregarTodoAction(todo) {
+        async agregarTodoAction(todo) {
+            await AddTodo(todo)
             this.todoList.push(todo)
         },
-        borrarAction(id) {
+        async borrarAction(id) {
+            await DeleteTodo(id)
             this.todoList = this.todosGetter.filter(item => item.id !== id)
         },
         completadoAction(id) {
@@ -41,7 +44,8 @@ export const useTodoStore = defineStore({
                 return item
             })
         },
-        eliminarCompletadosAction() {
+        async eliminarCompletadosAction() {
+            await DeleteCompletedTodo()
             this.todoList = this.todosGetter.filter(item => item.estado === false)
         },
         filtroAction(valor) {

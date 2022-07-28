@@ -23,8 +23,7 @@ export default {
             }
             const todo = {
                 descripcion: texto.value,
-                estado: false,
-                id: Date.now()
+                estado: false
             }
 
             todoStore.agregarTodoAction(todo)
